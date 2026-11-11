@@ -33,16 +33,14 @@ p5.js is a JavaScript library designed to make coding accessible for artists, de
 First you need to load the library in the `<head>` of your `index.html` file. 
 ```html
     <!-- P5 lib -->
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.8.0/lib/p5.min.js"></script>
+    <script src="<script src="https://cdn.jsdelivr.net/npm/p5@2.3.4/lib/p5.min.js"></script>"></script>
 ```
 Then, in your `script.js` file, you can create the skeleton for your p5 sketch
 ```javascript
 
 function setup(){
-    // place the code that should run once
-
-    // create a canvas and place it within the html element that has the id "sketch-container"
-    createCanvas(400, 400).parent("sketch-container");
+    // create a canvas
+    createCanvas(600, 400);
 }
 
 function draw(){
@@ -64,7 +62,7 @@ Johnny-Five (J5.js) is a JavaScript library used to program and control hardware
 In simple terms, Johnny-Five acts as a bridge between code and hardware, enabling you to control the physical world — lights, buttons, and motion sensors — using familiar web development tools.
 
 >[!TIP]
->You can have a look at the [J5.js library documentation↗](https://johnny-five.io/api/).
+>You can have a look at the [J5.js library documentation↗](https://methio.github.io/p5.j5/).
 Make sure to carefuly read the `Firmata` and `Add J5.js in your P5.js sketch` before reading the documentation.
 
 Johnny-Five operates through two main components: hardware and software.
@@ -73,7 +71,7 @@ For the hardware setup, you will need to upload the Firmata firmware to your mic
 
 ### Firmata 
 Steps:
-- [x] Plug in your Arduino or Arduino compatible microcontroller via USB
+- [x] Plug in your Arduino via USB
 - [ ] Open the Arduino IDE, select: `File > Examples > Firmata > StandardFirmataPlus`
 - [ ] Select your board and port.
 - [ ] Click the "Upload" button.
@@ -85,66 +83,36 @@ Steps:
 > - Make sure to unplug the board when you create or modify a circuit.
 
 ### Create a circuit
-To create your electronic circuits, you will use your Arduino Uno (the red microcontroller). To understand how to connect the components properly, please refer to the documentation provided with your electronics kit, [which is available on Notion here↗](https://makerslabemlyon.notion.site/makers-lab-kit-e97d4362ec7b4a35887fe952c7803af7).
+To create your electronic circuits, you will use your Arduino Uno (the red microcontroller). To understand how to connect the components properly, please refer to the [J5.js library documentation↗](https://methio.github.io/p5.j5/)
 
 ### Add J5.js in your P5.js sketch
 
- minimal sketch to use a led!
+Add the following line in your html head to load the library
+```
+<!-- load the p5.j5 library -->
+<script src="https://cdn.jsdelivr.net/gh/methio/p5.j5@latest/j5.js" defer></script>
+      
+```
+and then in your `script.js` file 
+```
+let board;
+let led;                        // a variable for our LED
 
-```javascript 
+function setup() {
+    createCanvas(400, 300);
+    board = createBoard();
+    createConnectButton(board);
 
-// a variable to store the "electronic object"
-let led;
-
-function preload(){
-
-    // Load the board
-    loadBoard();
+    led = new five.Led(2);        // components can be created before connecting:
+    led.blink(500);               // they will activate as soon as the board is ready
 }
 
-function setup(){
-
-    // we attach the led on the arduino pin ~3
-    led = new five.Led(3);
-}
-
-function draw(){
-
-    // switch on the led
-    led.on();
-
-    // switch off the led
-    led.off();
-
-    // set brightness from 0 to 255 (pin 3 has a ~ so we can apply an analog value)
-    led.brightness(100);
+function draw() { 
+    background(220); 
 }
 ```
 >[!TIP]
->🙋🏻‍♂️ More informations on leds can be found in the [documentation↗](https://johnny-five.io/api/led/).
-
-### johnny five documentation for (almost) each components from your kit
-
-**OUTPUTS**
-- [Led↗](https://johnny-five.io/api/led/)
-- [RGB led↗](https://johnny-five.io/api/led.rgb/)
-- [Piezo (buzzer)↗](https://johnny-five.io/api/piezo/)
-- [Servo↗](https://johnny-five.io/api/servo/)
-- [Motor↗](https://johnny-five.io/api/motor/)
-- [LCD screen↗](https://johnny-five.io/api/lcd/)  - [*show me example*](https://editor.p5js.org/methio/sketches/5C3DsmEnI)
-```javascript 
-    // LCD controller
-    lcd = new five.LCD({
-        controller: "PCF8574T",
-    });  
-```
-**INPUTS**
-- [Button↗](https://johnny-five.io/api/button/)
-- [Sensor (light sensor and potentiometer for instance)↗](https://johnny-five.io/api/sensor/)
-
-Components available in the makers'lab
-- [Joystick↗](https://johnny-five.io/api/joystick/)
-- [Motion sensor↗](https://johnny-five.io/api/motion/)
+>🙋🏻‍♂️ More informations on leds can be found in the [documentation↗](https://methio.github.io/p5.j5/#led).
 
 ## ML5.js
 ml5.js is a JavaScript library that makes machine learning accessible and easy to use directly in the browser. It is **built on top of TensorFlow.js** and provides a simple, beginner-friendly interface for tasks such as image recognition, text generation, pose detection, and more.

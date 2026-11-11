@@ -1,16 +1,20 @@
-// Your variables go here
-
-
-function preload() {
-    // Load ressources before setup
-}
+let board;
+let led;
 
 function setup() {
-    // Code that runs once here
-    createCanvas(500, 500).parent("sketch-container");
+    createCanvas(700, 500);
+    board = createBoard();
+    createConnectButton(board);
+    
+    led = new five.Led(2);         
 }
 
 function draw() {
-    // Code that runs repeatedly code here
     background(200);
+
+    if(mouseY > height/2){
+        led.on();
+    }else{
+        led.off();
+    }
 }
