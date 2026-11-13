@@ -54,9 +54,4 @@ function draw() {
 
 // function is trigeered when mouse is clicked/pressed
 // function mousePressed() {
-   // led.toggle();
-
-
-
-
-    
+   // led.t
