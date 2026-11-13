@@ -59,3 +59,28 @@ async function setup() {
 
 function draw() {
     image(video, 0, 0);
+
+    text(laLedEstRouge, 20, 20);
+    
+    // make sure at least one person is detected 
+    if(poses.length > 0){
+        let rs = poses[0].right_shoulder;   // left shoulder
+        if(previous.x != 0 && previous.y != 0) { // skip first detection
+            let distance = parseInt(dist(rs.x, rs.y, previous.x, previous.y));  // compute distance
+            text(distance, 10, 10);     // debug distance
+            if(distance > 50 && laLedEstRouge === true ){
+                fill(255, 0, 0, 100);
+                noStroke();
+                rect(0, 0, width, height);
+                //noLoop();
+            }
+        }
+
+        previous.x = rs.x;
+        previous.y = rs.y;
+    }
+}
+
+function mousePressed() {
+    rgb.color([random(255), random(255), random(255)]);
+}
